@@ -40,17 +40,3 @@ function BookList() {
     </div>
   );
 }
-
-return (
-  <div>
-    <h1>Book List</h1>
-    <ul>
-      {books.map((book, index) => (
-        <li key={index}>
-          <h3>{book.title}</h3>
-          <p>{book.author}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
