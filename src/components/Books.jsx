@@ -13,7 +13,7 @@ function BookList() {
     const getBooks = async () => {
       try {
         const response = await axios.get(
-          "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/docs/"
+          "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books"
         );
         setBooks(response.data);
       } catch (error) {
@@ -40,17 +40,3 @@ function BookList() {
     </div>
   );
 }
-
-return (
-  <div>
-    <h1>Book List</h1>
-    <ul>
-      {books.map((book, index) => (
-        <li key={index}>
-          <h3>{book.title}</h3>
-          <p>{book.author}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
