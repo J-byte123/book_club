@@ -23,35 +23,6 @@ const Login = () => {
   );
 };
 
-const Register = () => {
-  return (
-    <div>
-      <h2>Register</h2>
-      <form>
-        <div>
-          <label>Username:</label>
-          <input type="text" name="username" />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" name="password" />
-        </div>
-        <button type="submit">Register</button>
-      </form>
-      <Link to="/login">Login</Link>
-    </div>
-  );
-};
 
-const App = () => {
-  return (
-    <Router>
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-      </Switch>
-    </Router>
-  );
-};
 
-export default App;
+export default Login;
