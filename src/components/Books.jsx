@@ -13,7 +13,7 @@ function BookList() {
     const getBooks = async () => {
       try {
         const response = await axios.get(
-          "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/docs/"
+          "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books"
         );
         setBooks(response.data);
       } catch (error) {
