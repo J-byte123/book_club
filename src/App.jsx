@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import BookList from './components/Books';
@@ -15,8 +14,8 @@ const App = () => {
           <Route path="/books" element={<BookList />} />
           <Route path="/books/:id" element={<SingleBook />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/account" element={<Account />} />
+          {/* <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} /> */}
         </Routes>
       </BrowserRouter>
     </>
