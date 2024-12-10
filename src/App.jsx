@@ -3,6 +3,8 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import BookList from './components/Books';
 import Navigation from './components/Navigation';
+import Login from './components/Login';
+import SingleBook from './components/SingleBook';
 
 const App = () => {
   return (
