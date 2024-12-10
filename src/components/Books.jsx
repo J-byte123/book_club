@@ -1,7 +1,7 @@
 /* TODO - add your code to create a functional React component that displays all of the available books in the library's catalog. Fetch the book data from the provided API. Users should be able to click on an individual book to navigate to the SingleBook component and view its details. */
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default BookList;
 function BookList() {
@@ -13,7 +13,7 @@ function BookList() {
     const getBooks = async () => {
       try {
         const response = await axios.get(
-          "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books"
+          'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books'
         );
         setBooks(response.data);
       } catch (error) {
