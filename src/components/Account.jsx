@@ -2,16 +2,31 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom";
 
-export default function AccountInfo({ setToken }) {
-  
+export default function Account({ setToken }) {
   const [books, setBooks] = useState("");
-  const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+  //   possible change: use error, setError instead of user, setUser
 }
 
 return (
-    <div>
-        <h2>Welcome {user.email}</h2>
-    </div>
-)
+  <div>
+    <h4>Welcome {user.email}</h4>
+    <br>
+      <h2>Checked Out Books:</h2>
+      {error && <p>{error}</p>}
+      {books.length > 0 ? (
+        <ul>
+          {books.map((book) => (
+            <li key={book.id}>
+              {book.title} by {book.author}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No books have been checked out</p>
+      )}
+    </br>
+  </div>
+);
