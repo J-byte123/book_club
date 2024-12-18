@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+/* TODO - add your code to create a functional React component that renders a registration form */
+=======
  feature_ES
 /* TODO - add your code to create a functional React component that renders a registration form */
 
@@ -25,3 +28,4 @@ root.render(<registration form />);
 export default registration;
 
  main
+>>>>>>> 215d26167d6896f750b228195297884e24642b75
