@@ -1,0 +1,28 @@
+<<<<<<< HEAD
+=======
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import BookList from './components/Books';
+import Navigation from './components/Navigation';
+import Login from './components/Login';
+import SingleBook from './components/SingleBook';
+
+const App = () => {
+  return (
+    <>
+      <BrowserRouter>
+        <Navigation />
+        <Routes>
+          <Route path="/books" element={<BookList />} />
+          <Route path="/books/:id" element={<SingleBook />} />
+          <Route path="/login" element={<Login />} />
+          {/* <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} /> */}
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+};
+
+export default App;
+>>>>>>> 215d26167d6896f750b228195297884e24642b75
