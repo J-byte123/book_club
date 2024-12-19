@@ -24,6 +24,7 @@ const BookList = () => {
     book.title.toLowerCase().includes(lowerCaseSearchTerm)
   );
 
+
   return (
     <div>
       <h1>Book List</h1>

@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from '../Slice/apiSlice';
 
+
 const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
@@ -10,3 +11,4 @@ const store = configureStore({
 });
 
 export default store;
+
