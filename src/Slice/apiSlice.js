@@ -1,10 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const apiSlice = createApi({
-  reducerPath: 'api',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api',
-  }),
+      // CHANGE: the following code helps authenticate reservations (books in the account info)
+reducerPath: 'api',
+baseQuery: fetchBaseQuery({
+  baseUrl: 'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api',
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState()?.auth.token;
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`)
+    }
+    return headers;
+  }
+}),
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: () => '/books', // Makes a GET request to `/books (Books)`
@@ -32,7 +40,8 @@ export const apiSlice = createApi({
         method: 'POST',
         body: { bookId }, // Payload with the book ID to check out
       }),
-    }),
+        
+  }),
     getReservations: builder.query({
       query: () => {
         return {
@@ -56,7 +65,6 @@ export const apiSlice = createApi({
     }),
   }),
 });
-
 export const {
   useGetBooksQuery,
   useGetBookByIdQuery,

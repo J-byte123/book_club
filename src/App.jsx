@@ -1,11 +1,11 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import BookList from './components/Books';
-import Navigation from './components/Navigation';
-import Login from './components/Login';
-import SingleBook from './components/SingleBook';
-import Account from './components/Account';
-import Registration from './components/Register';
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import BookList from "./components/Books";
+import Navigation from "./components/Navigation";
+import Login from "./components/Login";
+import SingleBook from "./components/SingleBook";
+import Account from "./components/Account";
+import Registration from "./components/Register";
 
 const App = () => {
   return (
