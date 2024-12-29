@@ -7,8 +7,7 @@ import {
   useUpdateBookAvailabilityMutation,
   useLazyGetReservationsQuery,
 } from '../Slice/apiSlice';
-// eslint-disable-next-line no-unused-vars
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 const SingleBook = () => {
   const { id } = useParams();
