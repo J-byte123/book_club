@@ -7,7 +7,7 @@ const Navigation = () => {
   return (
     <>
       <nav>
-        <Link to="/books">Home</Link>
+        <Link to="/">Home</Link>
         <Link to="/login">Login</Link>
         <Link to="/register">Register</Link>
         <Link to="/account">Account</Link>
