@@ -1,28 +1,66 @@
 /* TODO - add your code to create a functional React component that renders details for a single book. Fetch the book data from the provided API. You may consider conditionally rendering a 'Checkout' button for logged in users. */
-import { useGetBookByIdQuery } from '../Slice/apiSlice';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import {
+  useGetBookByIdQuery,
+  useUpdateBookAvailabilityMutation,
+  useLazyGetReservationsQuery,
+} from '../Slice/apiSlice';
+import { useSelector } from 'react-redux';
 
 const SingleBook = () => {
-  const navigate = useNavigate();
   const { id } = useParams();
-  const { data, isLoading, isError, error } = useGetBookByIdQuery(id);
+  const { data, isLoading, isError } = useGetBookByIdQuery(id);
+  const [updateBookAvailability] = useUpdateBookAvailabilityMutation();
+  const [isCheckedOut, setIsCheckedOut] = useState(false);
+  // const token = useSelector((state) => state.auth.token);
+  const [refetchReservations] = useLazyGetReservationsQuery();
 
   const book = data?.book;
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error}</div>;
+  if (isLoading) return <p>Loading book details...</p>;
+  if (isError || !book) {
+    console.error('Error or no book data:', { isError, book });
+    return <p>Error loading book details. Please try again later.</p>;
+  }
+
+  const handleCheckout = async () => {
+    // if (!token) {
+    //   alert('Please log in to check out this book.');
+    // }
+
+    try {
+      await updateBookAvailability({ bookId: id, available: false }).unwrap();
+      await refetchReservations();
+      alert('Book checked out successfully!');
+      setIsCheckedOut(true);
+    } catch (error) {
+      console.error('Checkout failed:', error);
+      alert('Failed to check out the book. Please try again later.');
+    }
+  };
 
   return (
     <>
-      <img src={book.coverimage} />
-      <br></br>
-      <h3>Available: {book.available ? 'yes' : 'no'}</h3>
-      <h2>{book.title}</h2>
-      <h2>Author: {book.author}</h2>
-      <h3>Description:{book.description}</h3>
-      <br></br>
-      <button onClick={() => navigate(`/books`)}>Checkout</button>
+      <h2>About the Book...</h2>
+      <div>
+        <div className="scrollable-box">
+          <img src={book.coverimage} alt={book.title} />
+          <h1>{book.title}</h1>
+          <p>Author: {book.author}</p>
+          <p>Description: {book.description}</p>
+          {/* {token ? (
+            <button onClick={handleCheckout} disabled={isCheckedOut}>
+              {isCheckedOut ? 'Checked Out' : 'Checkout'}
+            </button>
+          ) : (
+            <button disabled={true}>Login to Checkout</button>
+          )} */}
+          <button onClick={handleCheckout} disabled={isCheckedOut}>
+            {isCheckedOut ? 'Checked Out' : 'Checkout'}
+          </button>
+        </div>
+      </div>
     </>
   );
 };

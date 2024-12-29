@@ -74,6 +74,7 @@ export const {
   useReturnBookMutation,
   useUpdateBookAvailabilityMutation,
   useGetReservationsQuery,
+  useLazyGetReservationsQuery,
 } = apiSlice;
 
 export default apiSlice.reducer;
