@@ -1,30 +1,40 @@
 /* TODO - add your code to create a functional React component that renders a login form */
 
-import React, { useState } from 'react';
-import { useLoginUserMutation } from '../Slice/apiSlice';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useLoginUserMutation } from "../Slice/apiSlice";
+import { useDispatch } from "react-redux"; // New import
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch(); // New line of code
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
-      alert('Both email and password are required.');
+      alert("Both email and password are required.");
       return;
     }
-
+    // the following change or addition helps store user data and helps clear errors
     try {
-      await loginUser({ email, password }).unwrap();
-      alert('Login successful!');
-      navigate('/books');
+      const userData = await loginUser({ email, password }).unwrap();
+      dispatch({
+        type: "auth/setUser",
+        payload: {
+          user: userData.user,
+          token: userData.token,
+        },
+      });
+
+      alert("Login successful!");
+      navigate("/books");
     } catch (err) {
-      console.error('Login failed:', err);
-      alert('Invalid credentials or server error.');
+      console.error("Login failed:", err);
+      alert("Invalid credentials or server error.");
     }
   };
 
