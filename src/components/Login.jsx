@@ -1,16 +1,16 @@
 /* TODO - add your code to create a functional React component that renders a login form */
 
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
-import { useLoginUserMutation } from '../Slice/apiSlice';
-// Probably don't need below for now
-// import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
- main
+import React, { useState } from "react";
+import { useLoginUserMutation } from "../Slice/apiSlice";
+import { useDispatch } from "react-redux"; // New import
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginUser] = useLoginUserMutation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch(); // New line of code
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,8 +33,8 @@ const Login = () => {
       alert("Login successful!");
       navigate("/books");
     } catch (err) {
-      console.error('Login failed:', err);
-      alert('Invalid credentials or server error.');
+      console.error("Login failed:", err);
+      alert("Invalid credentials or server error.");
     }
   };
 
@@ -43,7 +43,6 @@ const Login = () => {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
- feature_ES
           <label htmlFor="email">Email:</label>
           <input
             id="email"
@@ -61,27 +60,10 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
- main
           />
         </div>
         <button type="submit">Login</button>
       </form>
-      {/* Add navigation or additional actions if needed */}
     </div>
   );
 };
