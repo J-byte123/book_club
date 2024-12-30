@@ -1,83 +1,53 @@
 /* TODO - add your code to create a functional React component that displays all of the available books in the library's catalog. Fetch the book data from the provided API. Users should be able to click on an individual book to navigate to the SingleBook component and view its details. */
 
- feature_ES
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useGetBooksQuery } from '../Slice/apiSlice.js';
+import { useState } from 'react';
 
-export default BookList;
-function BookList() {
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const BookList = () => {
+  const navigate = useNavigate();
+  const { data, isLoading, isError, error } = useGetBooksQuery();
+  const [searchTerm, setSearchTerm] = useState('');
 
- featureMM
-import { useParams } from "react";
-import { useGetBooksQuery } from "./apiSlice.js";
-
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
- main
-
-export default BookList;
-function BookList() {
-  const navigate = useParams();
-  const { data } = useGetBooksQuery();
-  const books = data.books;
-
- featureMM
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {error}</div>;
- main
 
-  useEffect(() => {
-    const getBooks = async () => {
-      try {
-        const response = await axios.get(
-feature_ES
-          "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books"
+  const books = data?.books || [];
 
-          'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books'
- main
-        );
-        setBooks(response.data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const lowerCaseSearchTerm = searchTerm.toLowerCase();
 
-    getBooks();
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-feature_ES
-
- main
- main
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(lowerCaseSearchTerm)
+  );
 
   return (
     <div>
       <h1>Book List</h1>
-      <ul>
-        {books.map((book, index) => (
- feature_ES
-          <li key={index}>{book.title}</li>
 
-          <li key={index}>
-            {book.title}
-            <button onClick={() => navigate(`/book/${book.id}`)}>
-              More Book Information
-            </button>
-          </li>
- main
-        ))}
-      </ul>
+      <input
+        type="text"
+        placeholder="Search"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
+      {filteredBooks.length > 0 ? (
+        <ul>
+          {filteredBooks.map((book) => (
+            <li key={book.id}>
+              <strong>{book.title}</strong> by {book.author}
+              <button onClick={() => navigate(`/books/${book.id}`)}>
+                More Info
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No books match your search.</p>
+      )}
     </div>
   );
- feature_ES
-}
+};
 
-}
- main
+export default BookList;
