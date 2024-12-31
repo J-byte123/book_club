@@ -14,7 +14,7 @@ const SingleBook = () => {
   const { data, isLoading, isError } = useGetBookByIdQuery(id);
   const [updateBookAvailability] = useUpdateBookAvailabilityMutation();
   const [isCheckedOut, setIsCheckedOut] = useState(false);
-  // const token = useSelector((state) => state.auth.token);
+  const token = useSelector((state) => state.auth.token);
   const [refetchReservations] = useLazyGetReservationsQuery();
 
   const book = data?.book;
@@ -26,9 +26,9 @@ const SingleBook = () => {
   }
 
   const handleCheckout = async () => {
-    // if (!token) {
-    //   alert('Please log in to check out this book.');
-    // }
+    if (!token) {
+      alert('Please log in to check out this book.');
+    }
 
     try {
       await updateBookAvailability({ bookId: id, available: false }).unwrap();
@@ -50,16 +50,13 @@ const SingleBook = () => {
           <h1>{book.title}</h1>
           <p>Author: {book.author}</p>
           <p>Description: {book.description}</p>
-          {/* {token ? (
+          {token ? (
             <button onClick={handleCheckout} disabled={isCheckedOut}>
               {isCheckedOut ? 'Checked Out' : 'Checkout'}
             </button>
           ) : (
             <button disabled={true}>Login to Checkout</button>
-          )} */}
-          <button onClick={handleCheckout} disabled={isCheckedOut}>
-            {isCheckedOut ? 'Checked Out' : 'Checkout'}
-          </button>
+          )}
         </div>
       </div>
     </>

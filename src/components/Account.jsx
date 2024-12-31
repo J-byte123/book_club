@@ -5,14 +5,15 @@
 // I have added a if statement to check for a logged in user
 // I have also made some changes to Login.jsx and apiSlice.js
 
-import { useGetReservationsQuery } from "../Slice/apiSlice";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useGetReservationsQuery } from '../Slice/apiSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function Account() {
   const user = useSelector((state) => state.auth?.user);
   const navigate = useNavigate();
-  if (!user) { // this helps make sure only an existing or logged in user can access the account info
+  if (!user) {
+    // this helps make sure only an existing or logged in user can access the account info
     return (
       <div>
         <h3>In order to access account information, you must be logged in. </h3>
@@ -50,7 +51,7 @@ export default function Account() {
         <div>
           <p>No books have been checked out</p>
           <p>
-            <Link to="/books">Explore our book catalog!</Link>
+            <Link to="/">Explore our book catalog!</Link>
           </p>
         </div>
       )}

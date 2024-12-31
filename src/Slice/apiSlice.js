@@ -1,18 +1,33 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { jwtDecode } from 'jwt-decode';
 
 export const apiSlice = createApi({
-      // CHANGE: the following code helps authenticate reservations (books in the account info)
-reducerPath: 'api',
-baseQuery: fetchBaseQuery({
-  baseUrl: 'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api',
-  prepareHeaders: (headers, { getState }) => {
-    const token = getState()?.auth.token;
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`)
-    }
-    return headers;
-  }
-}),
+  // CHANGE: the following code helps authenticate reservations (books in the account info)
+  reducerPath: 'api',
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api',
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState()?.auth.token;
+      if (token) {
+        try {
+          const decodedToken = jwtDecode(token);
+          if (!decodedToken?.exp) {
+            console.warn('Token does not have an exp field.');
+          } else if (decodedToken.exp * 1000 > Date.now()) {
+            headers.set('Authorization', `Bearer ${token}`);
+          } else {
+            console.warn('Token is expired.');
+          }
+        } catch (error) {
+          console.error('Failed to decode token:', error);
+        }
+      } else {
+        console.warn('No token found, skipping Authorization header.');
+      }
+
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: () => '/books', // Makes a GET request to `/books (Books)`
@@ -40,8 +55,7 @@ baseQuery: fetchBaseQuery({
         method: 'POST',
         body: { bookId }, // Payload with the book ID to check out
       }),
-        
-  }),
+    }),
     getReservations: builder.query({
       query: () => {
         return {
