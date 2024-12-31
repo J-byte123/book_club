@@ -1,13 +1,10 @@
 /* TODO - add your code to create a functional React component that renders account details for a logged in user. Fetch the account data from the provided API. You may consider conditionally rendering a message for other users that prompts them to log in or create an account.  */
 
 // CHANGES MADE:
-// - In order for Account.jsx to check for users that have an account or have logged in
-// I have added a if statement to check for a logged in user
-// I have also made some changes to Login.jsx and apiSlice.js
 
-import { useGetReservationsQuery } from '../Slice/apiSlice';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useGetReservationsQuery, useReturnBookMutation } from "../Slice/apiSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Account() {
   const user = useSelector((state) => state.auth?.user);
@@ -25,7 +22,22 @@ export default function Account() {
     data: reservations = [],
     isLoading,
     isError,
+    refetch, // add refetch for book return list refresh
   } = useGetReservationsQuery();
+
+  const [returnBook] = useReturnBookMutation();
+
+  const handleReturns = async (reservationId) => {
+    try {
+      await returnBook(reservationId).unwrap();
+      alert("Selected Book has been returned.");
+      refetch(); // Loads the new list of checked out books
+    } catch (error) {
+      // Error handling
+      console.error("Unable to return selected book.");
+      alert("Unable to return selected book, please try again!");
+    }
+  };
 
   if (isLoading) {
     return <div>Loading your information, please wait! </div>;
@@ -33,17 +45,17 @@ export default function Account() {
   if (isError) {
     return <div>Something went wrong, please try again.</div>;
   }
-
+// POTENTIAL ISSUE: used reservations instead of reservation (getting declared but not read error when the two are switched)
   return (
     <div>
       <h4>Welcome, {user.email}</h4>
-
       <h2>Checked Out Books:</h2>
       {reservations.length > 0 ? (
         <ul>
-          {reservations.map((book) => (
-            <li key={book.id}>
+          {reservations.map((reservations) => (
+            <li key={reservations.id}>
               {reservations.book.title} by {reservations.book.author}
+              <button onClick={() => handleReturns(reservations.id)}>Return</button>
             </li>
           ))}
         </ul>
