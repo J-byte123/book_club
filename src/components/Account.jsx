@@ -2,60 +2,98 @@
 
 // CHANGES MADE:
 
-import { useGetReservationsQuery, useReturnBookMutation } from "../Slice/apiSlice";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import {
+  useGetReservationsQuery,
+  useReturnBookMutation,
+  useGetBooksQuery,
+} from '../Slice/apiSlice';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 export default function Account() {
-  const user = useSelector((state) => state.auth?.user);
+  const [checkedOutBooks, setCheckedOutBooks] = useState([]);
   const navigate = useNavigate();
-  if (!user) {
-    // this helps make sure only an existing or logged in user can access the account info
-    return (
-      <div>
-        <h3>In order to access account information, you must be logged in. </h3>
-        <Link to="/login">Please Log in.</Link>
-      </div>
-    );
-  }
+  const token = useSelector((state) => state.auth.token);
+  const decodedToken = token ? jwtDecode(token) : {};
+  const { email } = decodedToken;
   const {
-    data: reservations = [],
-    isLoading,
-    isError,
-    refetch, // add refetch for book return list refresh
-  } = useGetReservationsQuery();
+    data: booksData,
+    isLoading: loadingBooks,
+    isError: booksError,
+  } = useGetBooksQuery();
+  const {
+    data: reservationsData,
+    isLoading: loadingReservations,
+    isError: reservationsError,
+    // refetch, // add refetch for book return list refresh
+  } = useGetReservationsQuery(undefined, {
+    skip: !token,
+  });
 
   const [returnBook] = useReturnBookMutation();
+
+  useEffect(() => {
+    if (!email) {
+      navigate('/login');
+    }
+  }, [email, navigate]);
+
+  useEffect(() => {
+    if (booksData && reservationsData) {
+      const books = booksData.books || [];
+      const reservations = reservationsData.reservation || [];
+
+      const updatedCheckedOutBooks = reservations.map((reservation) => {
+        const matchingBook = books.find(
+          (book) => book.title === reservation.title
+        );
+        return matchingBook
+          ? { ...matchingBook, reservationId: reservation.id }
+          : reservation;
+      });
+
+      setCheckedOutBooks(updatedCheckedOutBooks);
+    }
+  }, [booksData, reservationsData]);
 
   const handleReturns = async (reservationId) => {
     try {
       await returnBook(reservationId).unwrap();
-      alert("Selected Book has been returned.");
-      refetch(); // Loads the new list of checked out books
+      setCheckedOutBooks((prevBooks) =>
+        prevBooks.filter((book) => book.reservationId !== reservationId)
+      );
+      alert('Selected Book has been returned.');
+      // refetch(); // Loads the new list of checked out books
     } catch (error) {
       // Error handling
-      console.error("Unable to return selected book.");
-      alert("Unable to return selected book, please try again!");
+      console.error('Unable to return selected book.');
+      alert('Unable to return selected book, please try again!');
     }
   };
 
-  if (isLoading) {
+  if (loadingBooks || loadingReservations) {
     return <div>Loading your information, please wait! </div>;
   }
-  if (isError) {
+  if (booksError || reservationsError) {
     return <div>Something went wrong, please try again.</div>;
   }
-// POTENTIAL ISSUE: used reservations instead of reservation (getting declared but not read error when the two are switched)
+
   return (
     <div>
-      <h4>Welcome, {user.email}</h4>
+      <h4>Welcome, {email}</h4>
       <h2>Checked Out Books:</h2>
-      {reservations.length > 0 ? (
+      {checkedOutBooks.length > 0 ? (
         <ul>
-          {reservations.map((reservations) => (
-            <li key={reservations.id}>
-              {reservations.book.title} by {reservations.book.author}
-              <button onClick={() => handleReturns(reservations.id)}>Return</button>
+          {checkedOutBooks.map((reservation) => (
+            <li key={reservation.reservationId}>
+              {reservation.title} by {reservation.author}
+              <button onClick={() => handleReturns(reservation.reservationId)}>
+                Return
+              </button>
             </li>
           ))}
         </ul>
