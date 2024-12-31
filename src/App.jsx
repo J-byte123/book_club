@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import SingleBook from "./components/SingleBook";
 import Account from "./components/Account";
 import Registration from "./components/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
