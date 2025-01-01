@@ -8,7 +8,7 @@ import { logout } from '../Slice/authSlice';
 
 const Navigation = () => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => !!state.auth.token); // Dynamically check login state
+  const isLoggedIn = useSelector((state) => !!state.auth.token); 
   console.log('isLoggedIn:', isLoggedIn);
 
   const handleLogout = () => {

@@ -16,7 +16,7 @@ const Register = () => {
     try {
       await createUser({ firstName, lastName, email, password }).unwrap();
       alert('Registration successful!');
-      navigate('/login'); // Redirect to the login page after successful registration
+      navigate('/login'); 
     } catch (err) {
       alert('Registration failed. Please try again.');
     }

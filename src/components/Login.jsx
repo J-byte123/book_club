@@ -21,10 +21,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (!credentials) {
-    //   alert('Both email and password are required.');
-    //   return;
-    // }
+    
     try {
       const response = await loginUser(credentials).unwrap();
       const token = response.token;
