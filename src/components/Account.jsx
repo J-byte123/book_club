@@ -9,7 +9,7 @@ import {
 } from '../Slice/apiSlice';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -67,9 +67,9 @@ export default function Account() {
         prevBooks.filter((book) => book.reservationId !== reservationId)
       );
       alert('Selected Book has been returned.');
-      // refetch(); // Loads the new list of checked out books
+      
     } catch (error) {
-      // Error handling
+      
       console.error('Unable to return selected book.');
       alert('Unable to return selected book, please try again!');
     }

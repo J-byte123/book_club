@@ -30,50 +30,50 @@ export const apiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getBooks: builder.query({
-      query: () => '/books', // Makes a GET request to `/books (Books)`
+      query: () => '/books', 
     }),
     getBookById: builder.query({
-      query: (id) => `/books/${id}`, // GET request to `/books/:id` (SingleBook)
+      query: (id) => `/books/${id}`, 
     }),
     createUser: builder.mutation({
       query: (userData) => ({
-        url: '/users/register', // POST request to `/users/register`
+        url: '/users/register', 
         method: 'POST',
-        body: userData, // Payload for the request
+        body: userData, 
       }),
     }),
     loginUser: builder.mutation({
       query: (credentials) => ({
-        url: '/users/login', // POST request to `/users/login` (Login)
+        url: '/users/login', 
         method: 'POST',
-        body: credentials, // Payload containing user credentials
+        body: credentials, 
       }),
     }),
     checkoutBook: builder.mutation({
       query: (bookId) => ({
-        url: `/reservations`, // POST request to `/reservations` (For single book)
+        url: `/reservations`, 
         method: 'POST',
-        body: { bookId }, // Payload with the book ID to check out
+        body: { bookId }, 
       }),
     }),
     getReservations: builder.query({
       query: () => {
         return {
-          url: '/reservations', // GET request to `/reservations`  (single books that are checked out)
+          url: '/reservations', 
           method: 'GET',
         };
       },
     }),
     updateBookAvailability: builder.mutation({
       query: ({ bookId, available }) => ({
-        url: `/books/${bookId}`, // PATCH request to `/books/:bookId`
+        url: `/books/${bookId}`, 
         method: 'PATCH',
-        body: { available }, // Payload with availability status
+        body: { available }, 
       }),
     }),
     returnBook: builder.mutation({
       query: (reservationId) => ({
-        url: `/reservations/${reservationId}`, // DELETE request to `/reservations/:reservationId` (to return single book)
+        url: `/reservations/${reservationId}`, 
         method: 'DELETE',
       }),
     }),
