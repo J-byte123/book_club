@@ -44,17 +44,23 @@ const SingleBook = () => {
   return (
     <>
       <h2>About the Book...</h2>
-      <div>
+      <div className="scroll-box">
         <img src={book.coverimage} alt={book.title} />
         <h1>{book.title}</h1>
         <p>Author: {book.author}</p>
         <p>Description: {book.description}</p>
         {token ? (
-          <button onClick={handleCheckout} disabled={isCheckedOut}>
+          <button
+            className="btn btn-primary"
+            onClick={handleCheckout}
+            disabled={isCheckedOut}
+          >
             {isCheckedOut ? 'Checked Out' : 'Checkout'}
           </button>
         ) : (
-          <button disabled={true}>Login to Checkout</button>
+          <button className="btn btn-primary" disabled={true}>
+            Login to Checkout
+          </button>
         )}
       </div>
     </>

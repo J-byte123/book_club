@@ -40,34 +40,42 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            value={credentials.email}
-            onChange={handleInputChange}
-            required
-          />
+    <>
+      <div>
+        <h2>Login</h2>
+        <div className="scroll-box">
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="email">Email:</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                value={credentials.email}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <br />
+            <div>
+              <label htmlFor="password">Password:</label>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                value={credentials.password}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <br />
+            <button className="btn btn-primary" type="submit">
+              Login
+            </button>
+          </form>
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            value={credentials.password}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
+      </div>
+    </>
   );
 };
 
