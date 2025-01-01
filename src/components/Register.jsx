@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCreateUserMutation } from '../Slices/apiSlice';
+import { useCreateUserMutation } from '../Slice/apiSlice';
 
 const Register = () => {
   const [firstName, setFirstName] = useState('');

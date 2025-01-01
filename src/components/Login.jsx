@@ -1,40 +1,44 @@
 /* TODO - add your code to create a functional React component that renders a login form */
 
-import React, { useState } from "react";
-import { useLoginUserMutation } from "../Slice/apiSlice";
-import { useDispatch } from "react-redux"; // New import
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useLoginUserMutation } from '../Slice/apiSlice';
+import { jwtDecode } from 'jwt-decode';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setToken } from '../Slice/authSlice';
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // New line of code
+  const dispatch = useDispatch();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      alert("Both email and password are required.");
-      return;
-    }
-    // the following change or addition helps store user data and helps clear errors
+    // if (!credentials) {
+    //   alert('Both email and password are required.');
+    //   return;
+    // }
     try {
-      const userData = await loginUser({ email, password }).unwrap();
-      dispatch({
-        type: "auth/setUser",
-        payload: {
-          user: userData.user,
-          token: userData.token,
-        },
-      });
-
-      alert("Login successful!");
-      navigate("/books");
+      const response = await loginUser(credentials).unwrap();
+      const token = response.token;
+      if (!token) {
+        throw new Error('No token returned from login response');
+      }
+      dispatch(setToken(token));
+      localStorage.setItem('token', token);
+      const decoded = jwtDecode(token);
+      alert(`Login successful! Welcome, ${decoded.email}.`);
+      navigate('/');
     } catch (err) {
-      console.error("Login failed:", err);
-      alert("Invalid credentials or server error.");
+      console.error('Login failed:', err);
+      alert('Invalid credentials or server error.');
     }
   };
 
@@ -47,8 +51,9 @@ const Login = () => {
           <input
             id="email"
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            value={credentials.email}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -57,8 +62,9 @@ const Login = () => {
           <input
             id="password"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={credentials.password}
+            onChange={handleInputChange}
             required
           />
         </div>

@@ -2,15 +2,28 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { logout } from '../Slice/authSlice';
 
 const Navigation = () => {
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => !!state.auth.token); // Dynamically check login state
+  console.log('isLoggedIn:', isLoggedIn);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    alert('You have successfully logged out.');
+  };
+
   return (
     <>
       <nav>
         <Link to="/">Home</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
-        <Link to="/account">Account</Link>
+        {!isLoggedIn && <Link to="/login">Login</Link>}
+        {!isLoggedIn && <Link to="/register">Register</Link>}
+        {isLoggedIn && <Link to="/account">Account</Link>}
+        {isLoggedIn && <button onClick={handleLogout}>Logout</button>}
       </nav>
     </>
   );
