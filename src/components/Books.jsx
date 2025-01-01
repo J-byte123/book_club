@@ -23,7 +23,8 @@ const BookList = () => {
 
   return (
     <div>
-      <h1>Book List</h1>
+      <h1>Welcome to Group 4 Book Club!</h1>
+      <h2>Book List</h2>
 
       <input
         type="text"
@@ -31,21 +32,28 @@ const BookList = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-
-      {filteredBooks.length > 0 ? (
-        <ul>
-          {filteredBooks.map((book) => (
-            <li key={book.id}>
-              <strong>{book.title}</strong> by {book.author}
-              <button onClick={() => navigate(`/books/${book.id}`)}>
-                More Info
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No books match your search.</p>
-      )}
+      <div className="scroll-box">
+        {filteredBooks.length > 0 ? (
+          <ul>
+            {filteredBooks.map((book) => (
+              <li key={book.id}>
+                <strong>{book.title}</strong>
+                <br />
+                by {book.author}
+                <br />
+                <button
+                  className="btn btn-primary"
+                  onClick={() => navigate(`/books/${book.id}`)}
+                >
+                  More Info
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No books match your search.</p>
+        )}
+      </div>
     </div>
   );
 };

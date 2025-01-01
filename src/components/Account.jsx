@@ -83,28 +83,34 @@ export default function Account() {
   }
 
   return (
-    <div>
-      <h4>Welcome, {email}</h4>
-      <h2>Checked Out Books:</h2>
-      {checkedOutBooks.length > 0 ? (
-        <ul>
-          {checkedOutBooks.map((reservation) => (
-            <li key={reservation.reservationId}>
-              {reservation.title} by {reservation.author}
-              <button onClick={() => handleReturns(reservation.reservationId)}>
-                Return
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <div>
-          <p>No books have been checked out</p>
-          <p>
-            <Link to="/">Explore our book catalog!</Link>
-          </p>
+    <>
+      <div>
+        <h3>Welcome, {email}</h3>
+        <h2>Checked Out Books:</h2>
+        <div className="scroll-box">
+          {checkedOutBooks.length > 0 ? (
+            <ul>
+              {checkedOutBooks.map((reservation) => (
+                <li key={reservation.reservationId}>
+                  {reservation.title} by {reservation.author}
+                  <br />
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleReturns(reservation.reservationId)}
+                  >
+                    Return
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div>
+              <p>No books have been checked out</p>
+              <Link to="/">Explore our book catalog!</Link>
+            </div>
+          )}
         </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 }

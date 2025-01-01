@@ -19,11 +19,34 @@ const Navigation = () => {
   return (
     <>
       <nav>
-        <Link to="/">Home</Link>
-        {!isLoggedIn && <Link to="/login">Login</Link>}
-        {!isLoggedIn && <Link to="/register">Register</Link>}
-        {isLoggedIn && <Link to="/account">Account</Link>}
-        {isLoggedIn && <button onClick={handleLogout}>Logout</button>}
+        <Link to="/">
+          <span className="material-symbols-outlined">home</span>
+          Home
+        </Link>
+        {!isLoggedIn && (
+          <Link to="/login">
+            <span className="material-symbols-outlined">login</span>
+            Login
+          </Link>
+        )}
+        {!isLoggedIn && (
+          <Link to="/register">
+            <span className="material-symbols-outlined">app_registration</span>
+            Register
+          </Link>
+        )}
+        {isLoggedIn && (
+          <Link to="/account">
+            <span className="material-symbols-outlined">person</span>
+            Account
+          </Link>
+        )}
+        {isLoggedIn && (
+          <button onClick={handleLogout}>
+            <span className="material-symbols-outlined">logout</span>
+            Logout
+          </button>
+        )}
       </nav>
     </>
   );

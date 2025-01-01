@@ -1,29 +1,108 @@
 body {
-  font-family: Georgia, serif;
-  background-color: #83d9e8;
+  font-family: Radley, serif;
+  background-image: url('https://i.pinimg.com/736x/73/84/25/738425c11ae1ee7927d67491c297c6e0.jpg');
   margin: 0;
-  padding: 10%;
+  padding: 0 10% 0 10%;
+  text-align: center;
 }
 
-#logo-image {
-  width: 30px;
-  margin-right: 10px;
-}
-
-Nav {
-  font-family: "Lucida Grande";
+nav {
+  font-family: 'Radley';
   font-size: x-large;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  background-color: rgb(185, 211, 222);
+  background-color: rgb(134, 134, 134);
+  padding: 10px;
 }
 
-div {
-  margin: 10%;
-  padding: 0%;
+nav a:hover {
+  color: lightgray; /* Optional: Change color on hover */
+  text-decoration: underline; /* Optional: Add underline on hover */
 }
-/* Add your own custom styles here */
 
-/* Add your own custom styles here */
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: white;
+  text-decoration: none;
+}
+
+nav a .material-symbols-outlined {
+  font-size: 1.5rem;
+}
+
+nav button {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  margin: 0 10px;
+}
+
+nav button:hover {
+  color: lightgray; /* Optional: Change button color on hover */
+}
+
+.scroll-box {
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Enables vertical scrolling */
+  padding: 10px; /* Optional padding */
+  background-color: rgba(255, 255, 255, 0.6); /* Transparent background */
+  border-radius: 10px; /* Rounded corners */
+  border: 1px solid #ccc; /* Optional border for visibility */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for better appearance */
+  margin-top: 20px; /* Space above the scrollable box */
+}
+
+.scroll-box ul {
+  list-style-type: none; /* Removes bullet points */
+  padding: 0; /* Removes default padding */
+  margin: 0; /* Removes default margin */
+}
+
+.scroll-box li {
+  padding: 10px 0;
+  font-size: 20px;
+}
+
+input {
+  border-radius: 5px; /* Makes the corners rounded */
+  border: 1px solid #ccc; /* Optional: Sets a subtle border */
+  outline: none; /* Removes the default focus outline */
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Optional: Adds subtle inner shadow */
+}
+
+input:focus {
+  border-color: #007bff; /* Changes border color on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a glow effect on focus */
+}
+
+h1 {
+  font-size: 70px;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+h2 {
+  font-size: 40px;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+h3 {
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+p {
+  font-size: 25px;
+}
+
+img {
+  width: 400px;
+}
