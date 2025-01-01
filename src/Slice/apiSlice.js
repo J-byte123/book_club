@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { jwtDecode } from 'jwt-decode';
 
 export const apiSlice = createApi({
-  // CHANGE: the following code helps authenticate reservations (books in the account info)
+ 
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api',
