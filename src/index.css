@@ -1,13 +1,29 @@
 body {
   font-family: Georgia, serif;
-  background-color: #f8f8f8;
+  background-color: #83d9e8;
   margin: 0;
-  padding: 0;
+  padding: 10%;
 }
 
 #logo-image {
   width: 30px;
   margin-right: 10px;
 }
+
+Nav {
+  font-family: "Lucida Grande";
+  font-size: x-large;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(185, 211, 222);
+}
+
+div {
+  margin: 10%;
+  padding: 0%;
+}
+/* Add your own custom styles here */
 
 /* Add your own custom styles here */
