@@ -7,7 +7,7 @@ import {
 } from '../Slice/apiSlice';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -27,7 +27,6 @@ export default function Account() {
     data: reservationsData,
     isLoading: loadingReservations,
     isError: reservationsError,
-    // refetch, // add refetch for book return list refresh
   } = useGetReservationsQuery(undefined, {
     skip: !token,
   });
@@ -65,9 +64,7 @@ export default function Account() {
         prevBooks.filter((book) => book.reservationId !== reservationId)
       );
       alert('Selected Book has been returned.');
-      
     } catch (error) {
-      
       console.error('Unable to return selected book.');
       alert('Unable to return selected book, please try again!');
     }
